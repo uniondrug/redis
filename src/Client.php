@@ -1,6 +1,6 @@
 <?php
 /**
- * Redis.php
+ * Client.php
  *
  */
 
@@ -66,8 +66,6 @@ class Client
         if (!isset($this->_options['host']) || !isset($this->_options['port']) || !isset($this->_options['persistent'])) {
             throw new RuntimeException('Unexpected inconsistency in options');
         }
-
-        $success = false;
 
         $redis = new Redis();
         if ($this->_options['persistent']) {

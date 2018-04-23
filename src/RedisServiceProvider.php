@@ -18,7 +18,7 @@ class RedisServiceProvider implements ServiceProviderInterface
 
                 $options = $this->getConfig()->path('redis.options');
                 if (!$options instanceof Config) {
-                    throw new \RuntimeException("Cache option cannot be empty");
+                    throw new \RuntimeException("Redis options cannot be empty");
                 }
 
                 return new Client($options->toArray());
