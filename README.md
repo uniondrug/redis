@@ -34,6 +34,7 @@ return [
  * options: Redis服务的配置参数，参考如下：
  * <code>
  *        'options'  => [
+ *            'prefix' => '', // use custom prefix on all keys
  *            'host' => 'localhost',
  *            'port' => 6379,
  *            'auth' => 'foobared',
@@ -45,6 +46,7 @@ return [
 return [
     'default' => [
         'options' => [
+            'prefix'     => '_REDIS',
             'host'       => '127.0.0.1',
             'port'       => 6379,
             'auth'       => '',
