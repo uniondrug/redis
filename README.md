@@ -8,7 +8,7 @@ $ composer require uniondrug/redis
 $ cp vendor/uniondrug/redis/redis.php config/
 ```
 
-修改 `app.php` 配置文件，加上Cache服务，服务名称`redis`
+修改 `app.php` 配置文件，加上Redis服务，服务名称`redis`
 
 ```php
 return [
