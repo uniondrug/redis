@@ -18,10 +18,11 @@ class RedisServiceProvider implements ServiceProviderInterface
          * 调整配置兼容
          * @author wsfuyibing <webserach@163.com>
          * @date   2019-02-21
+         * @var Config $config
          */
         $config = config()->path('redis');
         // 1. Redis对象
-        $optConfig = isset($config->options) && $config->options instanceof Config ? $config->options->toArray() : [];
+        $optConfig = isset($config->options) && $config->options instanceof Config ? $config->options->toArray() : $config->toArray();
         $di->set('redis', function() use ($optConfig){
             if (!extension_loaded('redis')) {
                 throw new \RuntimeException("Extension redis MUST be installed and loaded");
