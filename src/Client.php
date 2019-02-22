@@ -1,9 +1,7 @@
 <?php
 /**
  * Client.php
- *
  */
-
 namespace Uniondrug\Redis;
 
 use Exception;
@@ -13,7 +11,6 @@ use RuntimeException;
 
 /**
  * Class Client
- *
  * @package Uniondrug\Redis
  */
 class Client
@@ -22,7 +19,6 @@ class Client
      * @var \Redis
      */
     protected $_redis = null;
-
     /**
      * @var array
      */
@@ -30,7 +26,6 @@ class Client
 
     /**
      * Client constructor.
-     *
      * @param array $options
      */
     public function __construct(array $options = [])
@@ -38,23 +33,18 @@ class Client
         if (!is_array($options)) {
             $options = [];
         }
-
         if (!isset($options['host'])) {
             $options['host'] = '127.0.0.1';
         }
-
         if (!isset($options['port'])) {
             $options['port'] = 6379;
         }
-
         if (!isset($options['persistent'])) {
             $options['persistent'] = false;
         }
-
         if (!isset($options['auth'])) {
             $options['auth'] = '';
         }
-
         $this->_options = $options;
     }
 
@@ -66,7 +56,6 @@ class Client
         if (!isset($this->_options['host']) || !isset($this->_options['port']) || !isset($this->_options['persistent'])) {
             throw new RuntimeException('Unexpected inconsistency in options');
         }
-
         $redis = new Redis();
         if ($this->_options['persistent']) {
             $success = $redis->pconnect($this->_options['host'], $this->_options['port']);
@@ -76,28 +65,24 @@ class Client
         if (!$success) {
             throw new RuntimeException('Could not connect to the Redis server');
         }
-
         if (isset($this->_options['auth']) && !empty($this->_options['auth'])) {
             $success = $redis->auth($this->_options['auth']);
             if (!$success) {
                 throw new RuntimeException('Failed to authenticate with the Redis server');
             }
         }
-
         if (isset($this->_options['index']) && $this->_options['index'] > 0) {
             $success = $redis->select($this->_options['index']);
             if (!$success) {
                 throw new RuntimeException('Redis server selected database failed');
             }
         }
-
         if (isset($this->_options['prefix']) && !empty($this->_options['prefix'])) {
             $success = $redis->setOption(Redis::OPT_PREFIX, $this->_options['prefix']);
             if (!$success) {
                 throw new RuntimeException('Redis server set prefix failed');
             }
         }
-
         $this->_redis = $redis;
     }
 
@@ -114,10 +99,8 @@ class Client
 
     /**
      * Call real redis methods
-     *
      * @param $name
      * @param $arguments
-     *
      * @return mixed
      * @throws \Exception
      */
@@ -128,11 +111,14 @@ class Client
                 $this->_connect();
             }
             $this->_redis->ping();
-        } catch (RedisException $e) {
+        } catch(RedisException $e) {
             $this->_connect();
-        } catch (Exception $e) {
+        } catch(Exception $e) {
             throw $e;
         }
-        return call_user_func_array([$this->_redis, $name], $arguments);
+        return call_user_func_array([
+            $this->_redis,
+            $name
+        ], $arguments);
     }
 }
